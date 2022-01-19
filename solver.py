@@ -88,9 +88,9 @@ if __name__ == "__main__":
 
     while (suggestion := solver.guess()):
         guess = input(
-            f'Your guess ("{suggestion}" if left blank): '
+            f'Enter your guess ("{suggestion}" if left blank): '
         ).upper() or suggestion
-        response = input("Enter colors: ").lower()
+        response = input(f'Enter colors for "{guess}": ').lower()
         if len(response) != n:
             raise ValueError(f"Response has length != {n}")
         if response == n * "g":
