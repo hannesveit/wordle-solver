@@ -7,7 +7,8 @@ class WordleSolver:
     def __init__(self, dict_file, n=5):
         with open(dict_file) as fh:
             self.all_words = [
-                w for w in (l.strip().upper() for l in fh.readlines()) if len(w) == n
+                w for w in (l.strip().upper() for l in fh.readlines())
+                if len(w) == n
             ]
         self.n = n
         self.reset()
@@ -45,18 +46,12 @@ class WordleSolver:
         if not self.valid_words:
             return None
 
-        num_words_containing_letter = {
-            letter: count
-            for letter, count in Counter(
-                chain(*(set(w) for w in self.valid_words))
-            ).items()
-        }
+        num_words_containing_letter = Counter(
+            chain(*(set(w) for w in self.valid_words))
+        )
 
         pos_letter_count = {
-            i: {
-                letter: count_i
-                for letter, count_i in Counter(w[i] for w in self.valid_words).items()
-            }
+            i: Counter(w[i] for w in self.valid_words)
             for i in range(self.n)
         }
 
