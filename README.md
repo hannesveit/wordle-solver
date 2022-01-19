@@ -60,6 +60,7 @@ optional arguments:
 If your python version is too old but you have docker:
 
 ```
+cd /path/to/wordle-solver
 docker build -t wordle-solver .
 docker run -it --rm wordle-solver
 ```
