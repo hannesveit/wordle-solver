@@ -3,8 +3,8 @@
 A simple Wordle solver written in python.
 
 The solver plays in hard mode (i.e., it always plays all green and yellow letters
-obtained from previous guesses) and finds the solution in 3.7 guessses on average.
-It uses a simple greedy heuristic:
+obtained from previous guesses) and finds the solution in 3.7 guesses on average.
+It uses a simple heuristic:
 
 In each guess, it chooses the word whose "new" letters (those that haven't been
 played yet) have the highest frequency in the remaining solution pool. Ties are
@@ -25,34 +25,39 @@ Python 3.8 or later is required.
 $ python3 solver.py
 Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"
 
-Enter your guess ("LATER" if left blank):
-Enter colors for "LATER": yg---
-Enter your guess ("SADLY" if left blank):
-Enter colors for "SADLY": -g-y-
-Enter your guess ("CAVIL" if left blank):
-Enter colors for "CAVIL": -g--g
-Enter your guess ("BANAL" if left blank):
-Enter colors for "BANAL": ggggg
+Suggestions: LATER, ALTER, ALERT, IRATE, AROSE, STARE, RAISE, ARISE, LEARN, RENAL
+Your guess (leave blank to choose "LATER"):
+Enter colors for "LATER": --y-y
 
-Yay! BANAL!
+Suggestions: TORUS, SHORT, FROST, SNORT, SPORT, STORY, SHIRT, TURBO, STORK, STORM
+Your guess (leave blank to choose "TORUS"):
+Enter colors for "TORUS": ygy--
+
+Suggestions: ROBOT
+Your guess (leave blank to choose "ROBOT"):
+Enter colors for "ROBOT": ggggg
+
+Yay! ROBOT!
 ```
 
 In each round, you can accept the guessed word by hitting enter, or enter your own
-guess instead if you don't like the suggestion. Then enter the colors that Wordle
+guess instead if you don't like the top suggestion. Then enter the colors that Wordle
 gave you for this guess.
 
-You can also play with word lengths other than 5 or use custom dictionaries:
+You can also play with word lengths other than 5, use custom dictionaries, and adjust
+the number of suggestions displayed in each round:
 
 ```
 $ python3 solver.py -h
-usage: solver.py [-h] [-n LEN] [-d DICT]
+usage: solver.py [-h] [-n LEN] [-d DICT] [-s SUGG]
 
 A simple Wordle solver.
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -n LEN, --len LEN     wordle length
   -d DICT, --dict DICT  dictionary file
+  -s SUGG, --sugg SUGG  number of suggestions
 ```
 
 ### Using docker
