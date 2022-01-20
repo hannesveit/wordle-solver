@@ -42,10 +42,12 @@ class WordleSolver:
             w for w in self.valid_words if self.valid(w) and w != guess
         ]
 
-    def guess(self):
-        if not self.valid_words:
-            return None
 
+    def guess(self):
+        return self.suggestions()[0] if self.valid_words else None
+
+
+    def suggestions(self):
         num_words_containing_letter = Counter(
             chain(*(set(w) for w in self.valid_words))
         )
@@ -66,31 +68,41 @@ class WordleSolver:
             )
             return letter_score, letter_pos_score
 
-        return sorted(self.valid_words, key=key)[-1]
+        return list(reversed(sorted(self.valid_words, key=key)))
 
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="A simple Wordle solver.")
     parser.add_argument("-n", "--len", help="wordle length", type=int, default=5)
     parser.add_argument("-d", "--dict", help="dictionary file", required=False)
+    parser.add_argument(
+        "-s", "--sugg", help="number of suggestions", type=int, default=10
+    )
     args = vars(parser.parse_args())
     n = args["len"]
     dict_file = args["dict"] or "wordle_answers.txt" if n == 5 else "words.txt"
+    n_sugg = args["suggestions"]
 
-    print('Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"\n')
+    print('Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"')
     solver = WordleSolver(dict_file, n)
     solution = None
 
-    while (suggestion := solver.guess()):
+    while (suggestions := solver.suggestions()):
+        print(f"\nSuggestions: {', '.join(suggestions[:n_sugg])}")
         guess = input(
-            f'Enter your guess ("{suggestion}" if left blank): '
-        ).upper() or suggestion
-        response = input(f'Enter colors for "{guess}": ').lower()
-        if len(response) != n:
-            raise ValueError(f"Response has length != {n}")
+            f'Your guess (leave blank to choose "{suggestions[0]}"): '
+        ).upper() or suggestions[0]
+        if len(guess) != n or not guess.isalpha():
+            print(f"Guess must have length {n} and contain only letters")
+            continue
+        while (response := input(f'Enter colors for "{guess}": ').lower()):
+            if len(response) == n and all(l in "yg-" for l in response):
+                break
+            print(f"Response must have length {n} and and contain only g/y/-")
         if response == n * "g":
             solution = guess
             break
         solver.update_knowledge(guess, response)
 
     print(f"\nYay! {solution}!\n" if solution else "\nNo valid words left :(\n")
+
