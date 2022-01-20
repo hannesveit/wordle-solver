@@ -81,7 +81,7 @@ if __name__ == "__main__":
     args = vars(parser.parse_args())
     n = args["len"]
     dict_file = args["dict"] or "wordle_answers.txt" if n == 5 else "words.txt"
-    n_sugg = args["suggestions"]
+    n_sugg = args["sugg"]
 
     print('Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"')
     solver = WordleSolver(dict_file, n)
