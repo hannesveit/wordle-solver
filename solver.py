@@ -14,7 +14,7 @@ class WordleSolver:
         self.reset()
 
     def reset(self):
-        self.valid_words = list(self.all_words)
+        self.remaining_words = list(self.all_words)
         self.green, self.yellow, self.gray = {}, {}, set()
 
     def valid(self, word):
@@ -38,19 +38,19 @@ class WordleSolver:
             else:
                 raise ValueError(f'Response contains invalid symbol "{ri}"')
 
-        self.valid_words = [
-            w for w in self.valid_words if self.valid(w) and w != guess
+        self.remaining_words = [
+            w for w in self.remaining_words if self.valid(w) and w != guess
         ]
 
     def guess(self):
-        return self.suggestions()[0] if self.valid_words else None
+        return self.suggestions()[0] if self.remaining_words else None
 
     def suggestions(self):
         num_words_containing_letter = Counter(
-            chain(*(set(w) for w in self.valid_words))
+            chain(*(set(w) for w in self.remaining_words))
         )
         pos_letter_count = {
-            i: Counter(w[i] for w in self.valid_words)
+            i: Counter(w[i] for w in self.remaining_words)
             for i in range(self.n)
         }
         known_letters = set(chain(self.green.values(), self.yellow.keys()))
@@ -64,7 +64,7 @@ class WordleSolver:
             )
             return letter_score, letter_pos_score
 
-        return list(reversed(sorted(self.valid_words, key=key)))
+        return list(reversed(sorted(self.remaining_words, key=key)))
 
 
 if __name__ == "__main__":
