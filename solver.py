@@ -42,21 +42,17 @@ class WordleSolver:
             w for w in self.valid_words if self.valid(w) and w != guess
         ]
 
-
     def guess(self):
         return self.suggestions()[0] if self.valid_words else None
-
 
     def suggestions(self):
         num_words_containing_letter = Counter(
             chain(*(set(w) for w in self.valid_words))
         )
-
         pos_letter_count = {
             i: Counter(w[i] for w in self.valid_words)
             for i in range(self.n)
         }
-
         known_letters = set(chain(self.green.values(), self.yellow.keys()))
 
         def key(word):
