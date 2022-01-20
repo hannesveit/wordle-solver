@@ -1,6 +1,6 @@
 # wordle-solver
 
-A simple Wordle solver written in python.
+A simple [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in python.
 
 The solver plays in hard mode (i.e., it always plays all green and yellow letters
 obtained from previous guesses) and finds the solution in 3.7 guesses on average.
@@ -39,6 +39,8 @@ Enter colors for "ROBOT": ggggg
 
 Yay! ROBOT!
 ```
+![image](https://user-images.githubusercontent.com/5813121/150350490-0abb57c7-eec1-40e0-ac09-02c11661987f.png)
+
 
 In each round, you can accept the guessed word by hitting enter, or enter your own
 guess instead if you don't like the top suggestion. Then enter the colors that Wordle
