@@ -1,17 +1,22 @@
 from collections import defaultdict
+from itertools import chain
 
 from solver import WordleSolver
 
 
 def response(word, guess):
-    def symbol(letter, guessed_letter):
-        if letter == guessed_letter:
-            return "g"
-        if guessed_letter in word:
-            return "y"
-        return "-"
-
-    return "".join(symbol(x, y) for x, y in zip(word, guess))
+    green_positions = [i for i, (gi, wi) in enumerate(zip(guess, word)) if gi == wi]
+    word_minus_green = [l for i, l in enumerate(word) if i not in green_positions]
+    yellow_positions = [
+        i for i, (gi, wi) in enumerate(zip(guess, word))
+        if gi in word_minus_green and gi != wi
+    ]
+    response = ["-" for _ in word]
+    for i in green_positions:
+        response[i] = "g"
+    for i in yellow_positions:
+        response[i] = "y"
+    return "".join(response)
 
 
 def simulate(dict_file, n_range):

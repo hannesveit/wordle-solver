@@ -20,9 +20,12 @@ class WordleSolver:
     def valid(self, word):
         return (
             all(word[i] == l for (i, l) in self.green.items())
-            and all(l not in word for l in self.gray)
             and all(
-                any(word[i] == l for i in positions)
+                l not in self.gray
+                for i, l in enumerate(word) if i not in self.green.keys()
+            )
+            and all(
+                any(word[i] == l for i in positions - set(self.green.keys()))
                 for l, positions in self.yellow.items()
             )
         )
@@ -33,6 +36,8 @@ class WordleSolver:
                 self.gray.add(gi)
             elif ri == "g":
                 self.green[i] = gi
+                if gi in self.yellow:
+                    del self.yellow[gi]
             elif ri == "y":
                 self.yellow[gi] = self.yellow.get(gi, set(range(self.n))) - {i}
             else:
