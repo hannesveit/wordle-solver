@@ -25,14 +25,17 @@ Python 3.8 or later is required.
 $ python3 solver.py
 Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"
 
+2315 possible solutions left.
 Suggestions: LATER, ALTER, ALERT, IRATE, AROSE, STARE, RAISE, ARISE, LEARN, RENAL
 Your guess (leave blank to choose "LATER"):
 Enter colors for "LATER": --y-y
 
+63 possible solutions left.
 Suggestions: TORUS, SHORT, FROST, SNORT, SPORT, STORY, SHIRT, TURBO, STORK, STORM
 Your guess (leave blank to choose "TORUS"):
 Enter colors for "TORUS": ygy--
 
+1 possible solutions left.
 Suggestions: ROBOT
 Your guess (leave blank to choose "ROBOT"):
 Enter colors for "ROBOT": ggggg

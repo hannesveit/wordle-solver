@@ -84,7 +84,8 @@ if __name__ == "__main__":
     solution = None
 
     while (suggestions := solver.suggestions()):
-        print(f"\nSuggestions: {', '.join(suggestions[:n_sugg])}")
+        print(f"\n{len(suggestions)} possible solutions left.")
+        print(f"Suggestions: {', '.join(suggestions[:n_sugg])}")
         guess = input(
             f'Your guess (leave blank to choose "{suggestions[0]}"): '
         ).upper() or suggestions[0]
