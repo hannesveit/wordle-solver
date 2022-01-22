@@ -45,9 +45,9 @@ Yay! ROBOT!
 ![image](https://user-images.githubusercontent.com/5813121/150350490-0abb57c7-eec1-40e0-ac09-02c11661987f.png)
 
 
-In each round, you can accept the guessed word by hitting enter, or enter your own
+In each round, you can accept the top suggestion by hitting enter, or enter your own
 guess instead if you don't like the top suggestion. Then enter the colors that Wordle
-gave you for this guess.
+gives you for this guess.
 
 You can also play with word lengths other than 5, use custom dictionaries, and adjust
 the number of suggestions displayed in each round:
@@ -83,53 +83,53 @@ Using official Wordle answers as dictionary
 
 Wordles with 5 letters
 Need 3.70 guesses on average
-Distribution: 1:1 | 2:133 | 3:885 | 4:942 | 5:275 | 6:66 | 7:9 | 8:3 | 9:1
-Solved 2302/2315 Wordles (99.44%) in <= 6 guesses
+Distribution: 1:1 | 2:133 | 3:885 | 4:942 | 5:275 | 6:67 | 7:9 | 8:3
+Solved 2303/2315 Wordles (99.48%) in <= 6 guesses
 
 Using larger dictionary
 
 Wordles with 5 letters
 Need 4.16 guesses on average
-Distribution: 1:1 | 2:134 | 3:1206 | 4:1641 | 5:763 | 6:301 | 7:127 | 8:59 | 9:26 | 10:6 | 11:1 | 12:1 | 13:1
-Solved 4046/4267 Wordles (94.82%) in <= 6 guesses
+Distribution: 1:1 | 2:134 | 3:1206 | 4:1644 | 5:768 | 6:299 | 7:128 | 8:56 | 9:22 | 10:6 | 11:1 | 12:1 | 13:1
+Solved 4052/4267 Wordles (94.96%) in <= 6 guesses
 
 Wordles with 6 letters
-Need 3.63 guesses on average
-Distribution: 1:1 | 2:422 | 3:3168 | 4:2340 | 5:704 | 6:215 | 7:63 | 8:14 | 9:8 | 10:1
-Solved 6850/6936 Wordles (98.76%) in <= 6 guesses
+Need 3.62 guesses on average
+Distribution: 1:1 | 2:422 | 3:3169 | 4:2356 | 5:708 | 6:206 | 7:55 | 8:13 | 9:6
+Solved 6862/6936 Wordles (98.93%) in <= 6 guesses
 
 Wordles with 7 letters
-Need 3.36 guesses on average
-Distribution: 1:1 | 2:958 | 3:5066 | 4:2427 | 5:536 | 6:139 | 7:51 | 8:20 | 9:4 | 10:1
-Solved 9127/9203 Wordles (99.17%) in <= 6 guesses
+Need 3.35 guesses on average
+Distribution: 1:1 | 2:958 | 3:5098 | 4:2421 | 5:521 | 6:140 | 7:44 | 8:15 | 9:4 | 10:1
+Solved 9139/9203 Wordles (99.30%) in <= 6 guesses
 
 Wordles with 8 letters
-Need 3.04 guesses on average
-Distribution: 1:1 | 2:1762 | 3:5819 | 4:1562 | 5:210 | 6:31 | 7:7 | 8:4
-Solved 9385/9396 Wordles (99.88%) in <= 6 guesses
+Need 3.03 guesses on average
+Distribution: 1:1 | 2:1762 | 3:5847 | 4:1564 | 5:186 | 6:28 | 7:5 | 8:3
+Solved 9388/9396 Wordles (99.91%) in <= 6 guesses
 
 Wordles with 9 letters
-Need 2.80 guesses on average
-Distribution: 1:1 | 2:2481 | 3:4378 | 4:762 | 5:67 | 6:6 | 7:1
-Solved 7695/7696 Wordles (99.99%) in <= 6 guesses
+Need 2.79 guesses on average
+Distribution: 1:1 | 2:2481 | 3:4425 | 4:728 | 5:59 | 6:2
+Solved 7696/7696 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 10 letters
-Need 2.62 guesses on average
-Distribution: 1:1 | 2:2844 | 3:3126 | 4:381 | 5:22 | 6:3
+Need 2.61 guesses on average
+Distribution: 1:1 | 2:2844 | 3:3166 | 4:344 | 5:22
 Solved 6377/6377 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 11 letters
-Need 2.43 guesses on average
-Distribution: 1:1 | 2:2765 | 3:1638 | 4:144 | 5:7 | 6:2
+Need 2.42 guesses on average
+Distribution: 1:1 | 2:2765 | 3:1667 | 4:119 | 5:5
 Solved 4557/4557 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 12 letters
-Need 2.38 guesses on average
-Distribution: 1:1 | 2:2009 | 3:998 | 4:90 | 5:3
+Need 2.37 guesses on average
+Distribution: 1:1 | 2:2022 | 3:1000 | 4:77 | 5:1
 Solved 3101/3101 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 13 letters
 Need 2.32 guesses on average
-Distribution: 1:1 | 2:1318 | 3:513 | 4:46 | 5:2
+Distribution: 1:1 | 2:1322 | 3:514 | 4:42 | 5:1
 Solved 1880/1880 Wordles (100.00%) in <= 6 guesses
 ```
