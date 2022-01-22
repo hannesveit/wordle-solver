@@ -66,9 +66,9 @@ class WordleSolver:
         # for it). However, we don't want to delete this knowledge yet, in case we
         # find out later that there is in fact another occurrence of the letter in
         # the word, in which case we can still exclude all the yellow positions we
-        # have learned about so far. As soon as we get another yellow response for
-        # the letter, its previously obtained "yellow knowledge" will be restored
-        # from standby mode.
+        # have learned about so far (including the one that just turned green). As
+        # soon as we get another yellow response for the letter, its previously
+        # obtained "yellow knowledge" will be restored from standby mode.
         y = self.yellow[letter] = self.yellow.get(letter, dict(excluded=set()))
         y["excluded"] |= {wrong_pos}
         y["standby"] = standby
@@ -81,7 +81,10 @@ class WordleSolver:
                 for i, wi in enumerate(word) if i not in self.green
             )
             and all(
-                any(wi == l for i, wi in enumerate(word) if i not in y["excluded"])
+                any(
+                    wi == l for i, wi in enumerate(word)
+                    if i not in y["excluded"] and i not in self.green
+                )
                 for l, y in self.yellow.items() if not y["standby"]
             )
         )
