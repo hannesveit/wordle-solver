@@ -41,6 +41,34 @@ class WordleSolver:
             self.update_yellow(letter, position, True)
 
     def update_yellow(self, letter, wrong_pos, standby=False):
+        # This "standby" feature (plus the annoying additional complexity in
+        # handling gray and yellow letters in the valid() method below and in
+        # the response generation in evaluation.py) became necessary to support
+        # Wordle's unexpected coloring behavior with repeated letters:
+        #
+        # If we have a green letter, and our guess contains the same letter again
+        # (at another position), then this letter will be gray unless there are
+        # one or more *additional* occurrences of the same letter in the word, in
+        # which case it will be yellow.
+        #
+        # This behavior isn't mentioned in the Wordle instructions (as of today).
+        # In fact, it contradicts them. The quickstart guide states: yellow means
+        # that the letter is in the secret word but not in this position, and
+        # gray means that the letter is not contained in the word at all. Period.
+        # According to this, any repeat of a green letter should be yellow no
+        # matter what, and any gray letter should not be in the word, no matter
+        # what. Alas, the game behaves differently.
+        #
+        # Re "standby": once a letter turns green, we put our "yellow knowledge"
+        # for this letter on "standby", i.e., it won't be enforced as a constraint
+        # in the valid() method anymore (since we don't know if the word contains
+        # another occurence until we try it again and get a yellow or gray reponse
+        # for it). However, we don't want to delete this knowledge yet, in case we
+        # find out later that there is in fact another occurrence of the letter in
+        # the word, in which case we can still exclude all the yellow positions we
+        # have learned about so far. As soon as we get another yellow response for
+        # the letter, its previously obtained "yellow knowledge" will be restored
+        # from standby mode.
         y = self.yellow[letter] = self.yellow.get(letter, dict(excluded=set()))
         y["excluded"] |= {wrong_pos}
         y["standby"] = standby
@@ -118,4 +146,3 @@ if __name__ == "__main__":
         solver.update_knowledge(guess, response)
 
     print(f"\nYay! {solution}!\n" if solution else "\nNo valid words left :(\n")
-
