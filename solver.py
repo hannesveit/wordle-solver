@@ -16,18 +16,17 @@ class WordleSolver:
     def reset(self):
         self.remaining_words = list(self.all_words)
         self.green, self.yellow, self.gray = {}, {}, set()
-        self.inactive_yellow = set()
 
     def valid(self, word):
         return (
-            all(word[i] == l for (i, l) in self.green.items())
+            all(word[i] == l for i, l in self.green.items())
             and all(
                 l not in self.gray
                 for i, l in enumerate(word) if i not in self.green
             )
             and all(
-                any(word[i] == l for i in positions - set(self.green.keys()))
-                for l, positions in self.yellow.items() if not l in self.inactive_yellow
+                any(word[i] == l for i in y["positions"])
+                for l, y in self.yellow.items() if not y["inactive"]
             )
         )
 
@@ -38,11 +37,14 @@ class WordleSolver:
             elif ri == "g":
                 self.green[i] = gi
                 if gi in self.yellow:
-                    self.yellow[gi] -= {i}
-                    self.inactive_yellow.add(gi)
+                    self.yellow[gi]["positions"] -= {i}
+                    self.yellow[gi]["inactive"] = True
             elif ri == "y":
-                self.yellow[gi] = self.yellow.get(gi, set(range(self.n))) - {i}
-                self.inactive_yellow -= {gi}
+                y = self.yellow[gi] = self.yellow.get(
+                    gi, dict(positions=set(range(self.n)))
+                )
+                y["positions"] -= {i}
+                y["inactive"] = False
             else:
                 raise ValueError(f'Response contains invalid symbol "{ri}"')
 
