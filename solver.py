@@ -62,12 +62,12 @@ class WordleSolver:
         # Re "standby": once a letter turns green, we put our "yellow knowledge"
         # for this letter on "standby", i.e., it won't be enforced as a constraint
         # in the valid() method anymore (since we don't know if the word contains
-        # another occurence until we try it again and get a yellow or gray reponse
-        # for it). However, we don't want to delete this knowledge yet, in case we
-        # find out later that there is in fact another occurrence of the letter in
-        # the word, in which case we can still exclude all the yellow positions we
-        # have learned about so far (including the one that just turned green). As
-        # soon as we get another yellow response for the letter, its previously
+        # another occurence until we try it again and get a reponse for it).
+        # However, we don't want to delete this knowledge yet, in case we find out
+        # later that there is in fact another occurrence of the letter in the word,
+        # in which case we can still exclude all the yellow positions we have
+        # learned about so far (including the one that just turned green). As soon
+        # as we get another yellow response for a letter on standby, any previously
         # obtained "yellow knowledge" will be restored from standby mode.
         y = self.yellow[letter] = self.yellow.get(letter, dict(excluded=set()))
         y["excluded"] |= {wrong_pos}
