@@ -22,7 +22,7 @@ class WordleSolver:
             all(word[i] == l for (i, l) in self.green.items())
             and all(
                 l not in self.gray
-                for i, l in enumerate(word) if i not in self.green.keys()
+                for i, l in enumerate(word) if i not in self.green
             )
             and all(
                 any(word[i] == l for i in positions - set(self.green.keys()))
