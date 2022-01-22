@@ -139,7 +139,8 @@ if __name__ == "__main__":
         if len(guess) != n or not guess.isalpha():
             print(f"Guess must have length {n} and contain only letters")
             continue
-        while (response := input(f'Enter colors for "{guess}": ').lower()):
+        while True:
+            response = input(f'Enter colors for "{guess}": ').lower()
             if len(response) == n and all(l in "yg-" for l in response):
                 break
             print(f"Response must have length {n} and and contain only g/y/-")
