@@ -17,40 +17,46 @@ class WordleSolver:
         self.remaining_words = list(self.all_words)
         self.green, self.yellow, self.gray = {}, {}, set()
 
-    def valid(self, word):
-        return (
-            all(word[i] == l for i, l in self.green.items())
-            and all(
-                l not in self.gray
-                for i, l in enumerate(word) if i not in self.green
-            )
-            and all(
-                any(word[i] == l for i in y["positions"])
-                for l, y in self.yellow.items() if y["active"]
-            )
-        )
-
     def update_knowledge(self, guess, response):
         for i, (gi, ri) in enumerate(zip(guess, response)):
             if ri == "-":
-                self.gray.add(gi)
+                self.update_gray(gi)
             elif ri == "g":
-                self.green[i] = gi
-                if gi in self.yellow:
-                    self.yellow[gi]["positions"] -= {i}
-                    self.yellow[gi]["active"] = False
+                self.update_green(i, gi)
             elif ri == "y":
-                y = self.yellow[gi] = self.yellow.get(
-                    gi, dict(positions=set(range(self.n)))
-                )
-                y["positions"] -= {i}
-                y["active"] = True
+                self.update_yellow(gi, i)
             else:
                 raise ValueError(f'Response contains invalid symbol "{ri}"')
 
         self.remaining_words = [
             w for w in self.remaining_words if self.valid(w) and w != guess
         ]
+
+    def update_gray(self, letter):
+        self.gray.add(letter)
+
+    def update_green(self, position, letter):
+        self.green[position] = letter
+        if letter in self.yellow:
+            self.update_yellow(letter, position, True)
+
+    def update_yellow(self, letter, wrong_pos, standby=False):
+        y = self.yellow[letter] = self.yellow.get(letter, dict(excluded=set()))
+        y["excluded"] |= {wrong_pos}
+        y["standby"] = standby
+
+    def valid(self, word):
+        return (
+            all(word[i] == l for i, l in self.green.items())
+            and all(
+                wi not in self.gray
+                for i, wi in enumerate(word) if i not in self.green
+            )
+            and all(
+                any(wi == l for i, wi in enumerate(word) if i not in y["excluded"])
+                for l, y in self.yellow.items() if not y["standby"]
+            )
+        )
 
     def guess(self):
         return self.suggestions()[0] if self.remaining_words else None
