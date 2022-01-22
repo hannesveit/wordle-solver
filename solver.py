@@ -26,7 +26,7 @@ class WordleSolver:
             )
             and all(
                 any(word[i] == l for i in y["positions"])
-                for l, y in self.yellow.items() if not y["inactive"]
+                for l, y in self.yellow.items() if y["active"]
             )
         )
 
@@ -38,13 +38,13 @@ class WordleSolver:
                 self.green[i] = gi
                 if gi in self.yellow:
                     self.yellow[gi]["positions"] -= {i}
-                    self.yellow[gi]["inactive"] = True
+                    self.yellow[gi]["active"] = False
             elif ri == "y":
                 y = self.yellow[gi] = self.yellow.get(
                     gi, dict(positions=set(range(self.n)))
                 )
                 y["positions"] -= {i}
-                y["inactive"] = False
+                y["active"] = True
             else:
                 raise ValueError(f'Response contains invalid symbol "{ri}"')
 
