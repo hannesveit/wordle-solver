@@ -3,7 +3,7 @@
 A simple [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in python.
 
 The solver plays in hard mode (i.e., it always plays all green and yellow letters
-obtained from previous guesses) and finds the solution in 3.7 guesses on average.
+obtained from previous guesses) and finds the solution in 3.67 guesses on average.
 It uses a simple heuristic:
 
 In each guess, it chooses the word whose "new" letters (those that haven't been
@@ -15,7 +15,15 @@ If you're looking for an optimal solution, this one is not for you. There are
 plenty of Wordle solvers here on github, some of which brute-force an optimal
 solution, and others which come closer to an optimal solution using more
 sophisticated greedy heuristics that narrow down the solution pool more
-efficiently. This one is fast and was fun to implement.
+efficiently. This one is fast, easy to use, and plays decently.
+
+Note: unlike some of the other solvers out there, this one supports the exact
+coloring algorithm of the official Wordle app, which contradicts its own game
+instructions (as of today): if you have multiple occurrences of the same letter
+in your guess, and this letter is contained in the secret word, then only the
+first `N` occurrences of that letter in your guess will be yellow or green
+(`N` = number of occurrences of this letter in the secret word). Any additional
+occurrences of that letter in your guess will come back as gray.
 
 ## Usage
 
@@ -82,54 +90,54 @@ $ python3 evaluation.py
 Using official Wordle answers as dictionary
 
 Wordles with 5 letters
-Need 3.70 guesses on average
-Distribution: 1:1 | 2:133 | 3:885 | 4:942 | 5:275 | 6:67 | 7:9 | 8:3
-Solved 2303/2315 Wordles (99.48%) in <= 6 guesses
+Need 3.67 guesses on average
+Distribution: 1:1 | 2:133 | 3:911 | 4:945 | 5:256 | 6:58 | 7:8 | 8:3
+Solved 2304/2315 Wordles (99.52%) in <= 6 guesses
 
 Using larger dictionary
 
 Wordles with 5 letters
-Need 4.16 guesses on average
-Distribution: 1:1 | 2:134 | 3:1206 | 4:1644 | 5:768 | 6:299 | 7:128 | 8:56 | 9:22 | 10:6 | 11:1 | 12:1 | 13:1
-Solved 4052/4267 Wordles (94.96%) in <= 6 guesses
+Need 4.12 guesses on average
+Distribution: 1:1 | 2:135 | 3:1242 | 4:1677 | 5:718 | 6:285 | 7:128 | 8:52 | 9:21 | 10:6 | 11:1 | 12:1
+Solved 4058/4267 Wordles (95.10%) in <= 6 guesses
 
 Wordles with 6 letters
-Need 3.62 guesses on average
-Distribution: 1:1 | 2:422 | 3:3169 | 4:2356 | 5:708 | 6:206 | 7:55 | 8:13 | 9:6
-Solved 6862/6936 Wordles (98.93%) in <= 6 guesses
+Need 3.57 guesses on average
+Distribution: 1:1 | 2:423 | 3:3283 | 4:2368 | 5:625 | 6:171 | 7:48 | 8:12 | 9:5
+Solved 6871/6936 Wordles (99.06%) in <= 6 guesses
 
 Wordles with 7 letters
-Need 3.35 guesses on average
-Distribution: 1:1 | 2:958 | 3:5098 | 4:2421 | 5:521 | 6:140 | 7:44 | 8:15 | 9:4 | 10:1
-Solved 9139/9203 Wordles (99.30%) in <= 6 guesses
+Need 3.29 guesses on average
+Distribution: 1:1 | 2:1004 | 3:5372 | 4:2240 | 5:427 | 6:117 | 7:28 | 8:9 | 9:4 | 10:1
+Solved 9161/9203 Wordles (99.54%) in <= 6 guesses
 
 Wordles with 8 letters
-Need 3.03 guesses on average
-Distribution: 1:1 | 2:1762 | 3:5847 | 4:1564 | 5:186 | 6:28 | 7:5 | 8:3
-Solved 9388/9396 Wordles (99.91%) in <= 6 guesses
+Need 2.97 guesses on average
+Distribution: 1:1 | 2:1879 | 3:6096 | 4:1275 | 5:124 | 6:18 | 7:3
+Solved 9393/9396 Wordles (99.97%) in <= 6 guesses
 
 Wordles with 9 letters
-Need 2.79 guesses on average
-Distribution: 1:1 | 2:2481 | 3:4425 | 4:728 | 5:59 | 6:2
+Need 2.72 guesses on average
+Distribution: 1:1 | 2:2699 | 3:4483 | 4:495 | 5:17 | 6:1
 Solved 7696/7696 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 10 letters
-Need 2.61 guesses on average
-Distribution: 1:1 | 2:2844 | 3:3166 | 4:344 | 5:22
+Need 2.55 guesses on average
+Distribution: 1:1 | 2:3071 | 3:3119 | 4:184 | 5:2
 Solved 6377/6377 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 11 letters
-Need 2.42 guesses on average
-Distribution: 1:1 | 2:2765 | 3:1667 | 4:119 | 5:5
+Need 2.35 guesses on average
+Distribution: 1:1 | 2:2984 | 3:1527 | 4:44 | 5:1
 Solved 4557/4557 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 12 letters
-Need 2.37 guesses on average
-Distribution: 1:1 | 2:2022 | 3:1000 | 4:77 | 5:1
+Need 2.26 guesses on average
+Distribution: 1:1 | 2:2318 | 3:770 | 4:12
 Solved 3101/3101 Wordles (100.00%) in <= 6 guesses
 
 Wordles with 13 letters
-Need 2.32 guesses on average
-Distribution: 1:1 | 2:1322 | 3:514 | 4:42 | 5:1
+Need 2.21 guesses on average
+Distribution: 1:1 | 2:1494 | 3:381 | 4:4
 Solved 1880/1880 Wordles (100.00%) in <= 6 guesses
 ```

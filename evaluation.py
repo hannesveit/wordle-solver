@@ -1,21 +1,24 @@
-from collections import defaultdict
-from itertools import chain
+from collections import Counter, defaultdict
 
 from solver import WordleSolver
 
 
 def response(word, guess):
     green_positions = [i for i, (gi, wi) in enumerate(zip(guess, word)) if gi == wi]
-    word_minus_green = [l for i, l in enumerate(word) if i not in green_positions]
-    yellow_positions = [
-        i for i, (gi, wi) in enumerate(zip(guess, word))
-        if gi in word_minus_green and gi != wi
-    ]
+    word_minus_green = {}
+    guess_minus_green = {}
+    for i, (wi, gi) in enumerate(zip(word, guess)):
+        if i not in green_positions:
+            word_minus_green[i] = wi
+            guess_minus_green[i] = gi
+    yellow_remaining = Counter(word_minus_green.values())
     response = ["-" for _ in word]
     for i in green_positions:
         response[i] = "g"
-    for i in yellow_positions:
-        response[i] = "y"
+    for i, gi in guess_minus_green.items():
+        if yellow_remaining.get(gi):
+            response[i] = "y"
+            yellow_remaining[gi] -= 1
     return "".join(response)
 
 
