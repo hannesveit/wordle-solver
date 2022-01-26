@@ -84,12 +84,15 @@ options:
 
 ### Using docker
 
-If your python version is too old but you have docker, you can run the solver
-like this:
-
+If your python version is too old but you have docker, you can build a
+docker image
 ```
 cd /path/to/wordle-solver
 docker build -t wordle-solver .
+```
+
+and run it like this:
+```
 docker run -it --rm wordle-solver
 ```
 
