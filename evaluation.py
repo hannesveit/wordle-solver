@@ -5,14 +5,14 @@ from solver import WordleSolver
 
 def response(word, guess):
     green_positions = [i for i, (gi, wi) in enumerate(zip(guess, word)) if gi == wi]
-    word_minus_green = {}
+    word_minus_green = []
     guess_minus_green = {}
     for i, (wi, gi) in enumerate(zip(word, guess)):
         if i not in green_positions:
-            word_minus_green[i] = wi
+            word_minus_green.append(wi)
             guess_minus_green[i] = gi
-    yellow_remaining = Counter(word_minus_green.values())
-    response = ["-" for _ in word]
+    yellow_remaining = Counter(word_minus_green)
+    response = len(word) * ["-"]
     for i in green_positions:
         response[i] = "g"
     for i, gi in guess_minus_green.items():
