@@ -17,17 +17,26 @@ solution, and others which come closer to an optimal solution using more
 sophisticated greedy heuristics that narrow down the solution pool more
 efficiently. This one is fast, easy to use, and plays decently.
 
-Note: unlike some of the other solvers out there, this one supports the exact
+Note: Unlike some of the other solvers out there, this one supports the exact
 coloring algorithm of the official Wordle app, which contradicts its own game
-instructions (as of today): if you have multiple occurrences of the same letter
-in your guess, and this letter is contained in the secret word, then only the
-first `N` occurrences of that letter in your guess will be yellow or green
-(`N` = number of occurrences of this letter in the secret word). Any additional
-occurrences of that letter in your guess will come back as gray.
+instructions (as of today). If you have multiple occurrences of the same letter
+in your guess, and this letter is contained in the secret word *N* times, then
+at most *N* occurrences of that letter in your guess will be yellow or green.
+Any additional occurrences of that letter in your guess will come back as gray.
+
+Example:
+
+```
+Secret:                       ENEMY
+Guess:                        GEESE
+Colors based on Wordle docs:  -yg-y
+Actual Wordle colors:         -yg--
+```
 
 ## Usage
 
-Python 3.8 or later is required.
+Python 3.8 or later is required. As an alternative, you can run the tool in
+docker (see [below](#using-docker)).
 
 ```
 $ python3 solver.py
@@ -75,12 +84,23 @@ options:
 
 ### Using docker
 
-If your python version is too old but you have docker:
+If your python version is too old but you have docker, you can run the solver
+like this:
 
 ```
 cd /path/to/wordle-solver
 docker build -t wordle-solver .
 docker run -it --rm wordle-solver
+```
+
+(Optional) command line options can be specified like this:
+```
+docker run -it --rm wordle-solver solver.py -n 8
+```
+
+(Optional) performance evaluation script can be run like this:
+```
+docker run -it --rm wordle-solver evaluation.py
 ```
 
 ## Performance
