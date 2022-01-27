@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS
 
-from .solver import WordleSolver
+from solver import WordleSolver
 
 
 app = Flask(__name__)
