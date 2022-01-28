@@ -1,0 +1,19 @@
+.wordle-grid {
+    display: grid;
+    width: 390px;
+    height: 445px;
+    margin: auto;
+ }
+ .wordle-cell {
+    display: grid;
+    border-style: solid;
+    border-color: lightgrey;
+    border-width: 2px;
+    width: 70px;
+    height: 70px;
+ }
+.wordle-letter {
+    margin: auto;
+    font-size: 36px;
+    font-weight: bold;
+}
