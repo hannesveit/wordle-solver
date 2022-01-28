@@ -1,7 +1,12 @@
-FROM python:3
+FROM python:3.10-slim
 
-COPY *.py *.txt /wordle/
-WORKDIR /wordle
+ENV PYTHONUNBUFFERED True
 
-ENTRYPOINT ["python3"]
-CMD ["solver.py"]
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY . ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENTRYPOINT ["invoke"]
+CMD ["--list"]
