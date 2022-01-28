@@ -5,16 +5,32 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      x: "Hello, World!"
+      x: {},
     }
   }
 
+  backendHost() {
+    if (process.env.NODE_ENV === "production") {
+      return "TBD";  // TODO
+    }
+    else {
+      return "localhost:8080";
+    }
+  }
+
+  componentDidMount() {
+    fetch("http://" + this.backendHost() + "/")
+    .then(resp => resp.json())
+    .then(json => this.setState(s => ({...s, x: json})))
+  }
+
   render() {
-    let x = this.state.x;
+    let x = JSON.stringify(this.state.x);
 
     return (
       <div>
-        <h1>{x}</h1>
+        <h1>Hello, World!</h1>
+        <p>Backend test: {x}</p>
       </div>
     );
   }
