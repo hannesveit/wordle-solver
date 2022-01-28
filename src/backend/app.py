@@ -7,15 +7,6 @@ from solver import WordleSolver
 app = Flask(__name__)
 CORS(app)
 
-cached_solvers = {}
-
-
-def get_solver(n=5):
-    if n not in cached_solvers:
-        dict_file = "wordle_answers.txt" if n == 5 else "words.txt"
-        cached_solvers[n] = WordleSolver(dict_file, n)
-    return cached_solvers[n]
-
 
 @app.route("/")
 def suggestions():
@@ -23,9 +14,9 @@ def suggestions():
     game = [move.split(":") for move in game_str.split(",")] if game_str else []
     n_suggestions = request.args.get("n_suggestions", 10, int)
     n = request.args.get("n", 5, int)
+    dict_file = "wordle_answers.txt" if n == 5 else "words.txt"
 
-    solver = get_solver(n)
-    solver.reset()
+    solver = WordleSolver(dict_file, n)
 
     for guess, response in game:
         solver.update_knowledge(guess, response)
