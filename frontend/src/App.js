@@ -11,8 +11,10 @@ class App extends React.Component {
       game: [
         {word: "LATER", response: "--y-y"},
         {word: "TORUS", response: "ygy--"},
-        {word: "ROBOT", response: "ggggg"},
       ],
+      currentWord: "ROBO",
+      currentWordLocked: false,
+      currentColors: "",
     }
   }
 
@@ -38,7 +40,7 @@ class App extends React.Component {
         <WordleGrid
           n={this.state.n}
           maxGuesses={this.state.maxGuesses}
-          game={this.state.game}
+          game={[...this.state.game, {word: this.state.currentWord, response: null}]}
         />
       </div>
     )
