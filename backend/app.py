@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-@app.route("/")
+@app.route("/suggestions")
 def suggestions():
     game_str = request.args.get("game", "", str)
     game = [move.split(":") for move in game_str.split(",")] if game_str else []

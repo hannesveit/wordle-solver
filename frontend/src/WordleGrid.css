@@ -2,12 +2,12 @@
     display: grid;
     width: 390px;
     height: 445px;
-    margin: auto;
  }
  .wordle-cell {
     display: grid;
     border-style: solid;
     border-color: lightgrey;
+    background-color: white;
     border-width: 2px;
     width: 70px;
     height: 70px;
@@ -16,6 +16,7 @@
     display: grid;
     border-style: solid;
     border-color: rgb(160, 160, 160);
+    background-color: white;
     border-width: 2px;
     width: 70px;
     height: 70px;
@@ -43,7 +44,7 @@
     border-style: solid;
     border-color: lightgrey;
     border-width: 2px;
-    background-color: #86888a;
+    background-color: #787c7e;
     width: 70px;
     height: 70px;
  }

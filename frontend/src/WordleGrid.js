@@ -7,15 +7,42 @@ import './WordleGrid.css'
 class WordleGrid extends React.Component {
   render() {
     const P = this.props
+    const totalNumCells = P.maxGuesses * P.n
     const cells = []
 
-    for (let i = 0; i < P.maxGuesses; i++) {
-      const guess = (i < P.game.length) ? P.game[i] : null
-      for (let j = 0; j < P.n; j++) {
-        const gi = guess ? guess.word[j] : null
-        const ri = guess && guess.response ? guess.response[j] : null
-        cells.push(<GridCell letter={gi} color={ri}/>)
+    for (const guess of P.game) {
+      for (let i = 0; i < P.n; i++) {
+        cells.push(
+          <GridCell
+            key={"wordle_cell_" + cells.length}
+            letter={guess.word[i]}
+            color={guess.response[i]}
+          />
+        )
       }
+    }
+
+    if (P.currentWord) {
+      for (let i = 0; i < P.n; i++) {
+        cells.push(
+          <GridCell
+            key={"wordle_cell_" + cells.length}
+            letter={P.currentWord[i]}
+            color={P.currentColors[i]}
+            onClick={() => { if (P.pickingColors) P.handleSwitchColor(i) }}
+          />
+        )
+      }
+    }
+
+    for (let i = cells.length; i < totalNumCells; i++) {
+      cells.push(
+        <GridCell
+          key={"wordle_cell_" + cells.length}
+          letter={null}
+          color={null}
+        />
+      )
     }
 
     return (
@@ -41,8 +68,11 @@ class GridCell extends React.Component {
     const cellClass = cellClassByColor[P.color]
     const letterClass = P.color ? 'wordle-letter-white' : 'wordle-letter-black'
     return (
-      <div className={cellClass}>
-        <div className={letterClass}>
+      <div
+        className={cellClass}
+        onClick={P.onClick}
+      >
+        <div className={letterClass} style={{ userSelect: "none" }}>
           {P.letter}
         </div>
       </div>
