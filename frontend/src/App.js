@@ -18,7 +18,7 @@ class App extends React.Component {
       currentWord: null,
       pickingColors: false,
       currentColors: Array.from(Array(n)).map(() => null),
-      currentSuggestions: null,
+      currentSuggestions: [],
       fetchingSuggestions: false,
       gameOver: false,
     }
@@ -100,6 +100,7 @@ class App extends React.Component {
               response: confirmedColors,
             }
           ],
+          currentWord: null,
           currentColors: Array.from(Array(this.state.n)).map(() => null),
         }
       ),
@@ -120,6 +121,11 @@ class App extends React.Component {
 
   renderWordSelect() {
     const makeOption = (suggestion) => ({value: suggestion, label: suggestion})
+    const options = (
+      this.state.currentSuggestions.length
+      ? this.state.currentSuggestions.map(makeOption) : []
+    )
+    const value = this.state.currentWord ? makeOption(this.state.currentWord) : null
 
     return (
       <div>
@@ -127,8 +133,8 @@ class App extends React.Component {
           <CreatableSelect
             isClearable
             onChange={this.handleSelectChange}
-            options={this.state.currentSuggestions.map(makeOption)}
-            value={makeOption(this.state.currentWord)}
+            options={options}
+            value={value}
           />
         </div>
         <div>
@@ -182,10 +188,6 @@ class App extends React.Component {
   }
 
   render() {
-    if (!this.state.gameOver && !this.state.currentWord) {
-      return null
-    }
-
     let wordleInputForm = this.renderWordSelect()
     if (this.state.pickingColors) {
       wordleInputForm = this.renderColorSelect()
