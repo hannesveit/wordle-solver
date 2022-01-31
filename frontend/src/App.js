@@ -75,7 +75,7 @@ class App extends React.Component {
       return
     }
     const newWord = option.value.toUpperCase()
-    if (newWord.length == this.state.n && /^[A-Z]+$/.test(newWord)) {
+    if (newWord.length === this.state.n && /^[A-Z]+$/.test(newWord)) {
       this.setState(s => ({...s, currentWord: newWord}))
     }
     else {
@@ -172,7 +172,7 @@ class App extends React.Component {
 
   renderGameOver() {
     const msg = (
-      this.state.game.slice(-1)[0].response == "g".repeat(this.state.n)
+      this.state.game.slice(-1)[0].response === "g".repeat(this.state.n)
       ? "Sweet! You won!"
       : "No valid solutions left :("
     )
@@ -202,9 +202,10 @@ class App extends React.Component {
 
     return (
       <div className="everything">
-        <a href="https://github.com/hannesveit/wordle-solver" target="_blank">
+        <a href="https://github.com/hannesveit/wordle-solver" target="_blank" rel="noreferrer">
           <img
             src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="Source code on GitHub"
             width={50}
             height={50}
           />
