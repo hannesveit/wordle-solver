@@ -1,5 +1,4 @@
 import React from 'react';
-import Grid from 'react-css-grid'
 
 import './WordleGrid.css'
 
@@ -8,7 +7,8 @@ class WordleGrid extends React.Component {
   render() {
     const P = this.props
     const totalNumCells = P.maxGuesses * P.n
-    const cells = []
+
+    let cells = []
 
     for (const guess of P.game) {
       for (let i = 0; i < P.n; i++) {
@@ -47,9 +47,7 @@ class WordleGrid extends React.Component {
 
     return (
       <div className="wordle-grid">
-        <Grid width={70} gap={5}>
           {cells}
-        </Grid>
       </div>
     )
   }

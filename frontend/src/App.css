@@ -8,7 +8,7 @@
 .wordle-heading {
    color: rgb(77, 79, 83);
    font-family: 'Helvetica Neue', sans-serif;
-   font-size: 95px;
+   font-size: 80px;
    font-weight: bold;
    letter-spacing: -1px;
    line-height: 1;
@@ -25,7 +25,7 @@
 }
 .wordle-app {
    margin-top: 50px;
-   height: 495px;
+   height: 445px;
    overflow: hidden;
    background: rgb(234, 236, 240);
    border-radius: 25px;
@@ -33,8 +33,8 @@
 .wordle-container {
    margin: 25px;
    float: left;
-   width: 360px;
-   height: 470px;
+   width: 300px;
+   height: 445px;
  }
 .wordle-input-form {
    margin: 25px;
