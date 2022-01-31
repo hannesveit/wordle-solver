@@ -1,6 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import CreatableSelect from 'react-select/creatable';
+import {isMobile} from 'react-device-detect';
 
 import WordleGrid from './WordleGrid';
 import './App.css'
@@ -208,7 +209,7 @@ class App extends React.Component {
             height={50}
           />
         </a>
-        <div className="wordle-heading">
+        <div className={isMobile ? "wordle-heading-mobile" : "wordle-heading"}>
             wordle solver
         </div>
         <div className="almost-everything">

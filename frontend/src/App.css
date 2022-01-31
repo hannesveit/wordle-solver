@@ -14,6 +14,15 @@
    line-height: 1;
    text-align: center;
 }
+.wordle-heading-mobile {
+   color: rgb(77, 79, 83);
+   font-family: 'Helvetica Neue', sans-serif;
+   font-size: 36px;
+   font-weight: bold;
+   letter-spacing: -1px;
+   line-height: 1;
+   text-align: center;
+}
 .wordle-app {
    margin-top: 50px;
    height: 495px;
