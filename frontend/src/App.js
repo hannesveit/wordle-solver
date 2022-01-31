@@ -1,17 +1,15 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import CreatableSelect from 'react-select/creatable';
-import {isMobile} from 'react-device-detect';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import CreatableSelect from "react-select/creatable";
+import { isMobile } from "react-device-detect";
 
-import WordleGrid from './WordleGrid';
-import './App.css'
-
+import WordleGrid from "./WordleGrid";
+import "./App.css";
 
 class App extends React.Component {
-
   constructor(props) {
     super(props);
-    const n = 5
+    const n = 5;
     this.state = {
       n: n,
       maxGuesses: 6,
@@ -22,114 +20,118 @@ class App extends React.Component {
       currentSuggestions: [],
       fetchingSuggestions: false,
       gameOver: false,
-    }
+    };
   }
 
-  backendHost = (
+  backendHost =
     process.env.NODE_ENV === "production"
-    ? "TBD"  // TODO
-    : "localhost:8080"
-  );
+      ? "TBD" // TODO
+      : "localhost:8080";
 
   componentDidMount() {
-    this.fetchSuggestions()
+    this.fetchSuggestions();
   }
 
   fetchSuggestions() {
     this.setState(
-      s => ({...s, fetchingSuggestions: true}),
+      (s) => ({ ...s, fetchingSuggestions: true }),
       () => {
         fetch(
-          "http://"
-          + this.backendHost
-          + "/suggestions?n_suggestions=50&game="
-          + this.gameStr()
+          "http://" +
+            this.backendHost +
+            "/suggestions?n_suggestions=50&game=" +
+            this.gameStr()
         )
-        .then(resp => resp.json())
-        .then(json => {
-          const newCurrentWord = json.suggestions.length ? json.suggestions[0] : null
-          this.setState(s => ({
-            ...s,
-            currentSuggestions: json.suggestions,
-            currentWord: newCurrentWord,
-            fetchingSuggestions: false,
-            gameOver: (
-              newCurrentWord && this.state.game.length <= this.state.n
-              ? false : true
-            )
-          })
-        )})
+          .then((resp) => resp.json())
+          .then((json) => {
+            const newCurrentWord = json.suggestions.length
+              ? json.suggestions[0]
+              : null;
+            this.setState((s) => ({
+              ...s,
+              currentSuggestions: json.suggestions,
+              currentWord: newCurrentWord,
+              fetchingSuggestions: false,
+              gameOver:
+                newCurrentWord && this.state.game.length <= this.state.n
+                  ? false
+                  : true,
+            }));
+          });
         // TODO: error handling
       }
-    )
+    );
   }
 
   gameStr() {
-    return this.state.game.map(
-      (guess) => (guess.word + ":" + guess.response)
-    ).join(",")
+    return this.state.game
+      .map((guess) => guess.word + ":" + guess.response)
+      .join(",");
   }
 
   handleSelectChange = (option) => {
     if (!option || !option.value) {
-      return
+      return;
     }
-    const newWord = option.value.toUpperCase()
+    const newWord = option.value.toUpperCase();
     if (newWord.length === this.state.n && /^[A-Z]+$/.test(newWord)) {
-      this.setState(s => ({...s, currentWord: newWord}))
-    }
-    else {
+      this.setState((s) => ({ ...s, currentWord: newWord }));
+    } else {
       alert(
-        `"${newWord}" is invalid. Choose a word of length ${this.state.n} `
-        + "containing only letters."
-      )
+        `"${newWord}" is invalid. Choose a word of length ${this.state.n} ` +
+          "containing only letters."
+      );
     }
-  }
+  };
 
   handleWordConfirmed = () => {
-    this.setState(s => ({...s, pickingColors: true}))
-  }
+    this.setState((s) => ({ ...s, pickingColors: true }));
+  };
 
   handleColorsConfirmed = () => {
-    const confirmedColors = this.state.currentColors.join("")
+    const confirmedColors = this.state.currentColors.join("");
     this.setState(
-      s => (
-        {
-          ...s,
-          pickingColors: false,
-          game: [
-            ...this.state.game,
-            {
-              word: this.state.currentWord,
-              response: confirmedColors,
-            }
-          ],
-          currentWord: null,
-          currentColors: Array.from(Array(this.state.n)).map(() => null),
-        }
-      ),
-      () => {this.fetchSuggestions()}
-    )
-  }
+      (s) => ({
+        ...s,
+        pickingColors: false,
+        game: [
+          ...this.state.game,
+          {
+            word: this.state.currentWord,
+            response: confirmedColors,
+          },
+        ],
+        currentWord: null,
+        currentColors: Array.from(Array(this.state.n)).map(() => null),
+      }),
+      () => {
+        this.fetchSuggestions();
+      }
+    );
+  };
 
   handleSwitchColor = (i) => {
-    const nextColor = {null: "-", "-": "y", "y": "g", "g": "-"}
-    const updatedColors = this.state.currentColors
-    updatedColors[i] = nextColor[updatedColors[i]]
-    this.setState(s => ({...s, currentColors: updatedColors}))
-  }
+    const nextColor = { null: "-", "-": "y", y: "g", g: "-" };
+    const updatedColors = this.state.currentColors;
+    updatedColors[i] = nextColor[updatedColors[i]];
+    this.setState((s) => ({ ...s, currentColors: updatedColors }));
+  };
 
   handleReset = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   renderWordSelect() {
-    const makeOption = (suggestion) => ({value: suggestion, label: suggestion})
-    const options = (
-      this.state.currentSuggestions.length
-      ? this.state.currentSuggestions.map(makeOption) : []
-    )
-    const value = this.state.currentWord ? makeOption(this.state.currentWord) : null
+    const makeOption = (suggestion) => ({
+      value: suggestion,
+      label: suggestion,
+    });
+    const options = this.state.currentSuggestions.length
+      ? this.state.currentSuggestions.map(makeOption)
+      : [];
+    const value = this.state.currentWord
+      ? makeOption(this.state.currentWord)
+      : null;
 
     return (
       <div>
@@ -142,22 +144,20 @@ class App extends React.Component {
           />
         </div>
         <div>
-          <Button
-            className="confirm-button"
-            onClick={this.handleWordConfirmed}
-          >
+          <Button className="confirm-button" onClick={this.handleWordConfirmed}>
             Confirm
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   renderColorSelect() {
     return (
       <div>
-        <p style={{textAlign: "center"}}>
-          Enter colors for <b>"{this.state.currentWord}"</b> by clicking its letters!
+        <p style={{ textAlign: "center" }}>
+          Enter colors for <b>"{this.state.currentWord}"</b> by clicking its
+          letters!
         </p>
         <Button
           className="confirm-button"
@@ -167,42 +167,39 @@ class App extends React.Component {
           Confirm
         </Button>
       </div>
-    )
+    );
   }
 
   renderGameOver() {
-    const msg = (
+    const msg =
       this.state.game.slice(-1)[0].response === "g".repeat(this.state.n)
-      ? "Sweet! You won!"
-      : "No valid solutions left :("
-    )
+        ? "Sweet! You won!"
+        : "No valid solutions left :(";
     return (
       <div>
-        <p style={{textAlign: "center"}}>
-          {msg}
-        </p>
-        <Button
-          className="confirm-button"
-          onClick={this.handleReset}
-        >
+        <p style={{ textAlign: "center" }}>{msg}</p>
+        <Button className="confirm-button" onClick={this.handleReset}>
           Start over
         </Button>
       </div>
-    )
+    );
   }
 
   render() {
-    let wordleInputForm = this.renderWordSelect()
+    let wordleInputForm = this.renderWordSelect();
     if (this.state.pickingColors) {
-      wordleInputForm = this.renderColorSelect()
-    }
-    else if (this.state.gameOver) {
-      wordleInputForm = this.renderGameOver()
+      wordleInputForm = this.renderColorSelect();
+    } else if (this.state.gameOver) {
+      wordleInputForm = this.renderGameOver();
     }
 
     return (
       <div className="everything">
-        <a href="https://github.com/hannesveit/wordle-solver" target="_blank" rel="noreferrer">
+        <a
+          href="https://github.com/hannesveit/wordle-solver"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img
             src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
             alt="Source code on GitHub"
@@ -211,7 +208,7 @@ class App extends React.Component {
           />
         </a>
         <div className={isMobile ? "wordle-heading-mobile" : "wordle-heading"}>
-            wordle solver
+          wordle solver
         </div>
         <div className="almost-everything">
           <div className="wordle-app">
@@ -226,14 +223,12 @@ class App extends React.Component {
                 handleSwitchColor={this.handleSwitchColor}
               />
             </div>
-            <div className="wordle-input-form">
-              {wordleInputForm}
-            </div>
+            <div className="wordle-input-form">{wordleInputForm}</div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default App
+export default App;

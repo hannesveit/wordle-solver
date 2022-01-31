@@ -1,14 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import './WordleGrid.css'
-
+import "./WordleGrid.css";
 
 class WordleGrid extends React.Component {
   render() {
-    const P = this.props
-    const totalNumCells = P.maxGuesses * P.n
+    const P = this.props;
+    const totalNumCells = P.maxGuesses * P.n;
 
-    let cells = []
+    let cells = [];
 
     for (const guess of P.game) {
       for (let i = 0; i < P.n; i++) {
@@ -18,7 +17,7 @@ class WordleGrid extends React.Component {
             letter={guess.word[i]}
             color={guess.response[i]}
           />
-        )
+        );
       }
     }
 
@@ -29,9 +28,11 @@ class WordleGrid extends React.Component {
             key={"wordle_cell_" + cells.length}
             letter={P.currentWord[i]}
             color={P.currentColors[i]}
-            onClick={() => { if (P.pickingColors) P.handleSwitchColor(i) }}
+            onClick={() => {
+              if (P.pickingColors) P.handleSwitchColor(i);
+            }}
           />
-        )
+        );
       }
     }
 
@@ -42,41 +43,32 @@ class WordleGrid extends React.Component {
           letter={null}
           color={null}
         />
-      )
+      );
     }
 
-    return (
-      <div className="wordle-grid">
-          {cells}
-      </div>
-    )
+    return <div className="wordle-grid">{cells}</div>;
   }
 }
-
 
 class GridCell extends React.Component {
   render() {
     const P = this.props;
     const cellClassByColor = {
-      null: P.letter ? 'wordle-cell-with-letter' : 'wordle-cell',
-      'g': 'wordle-cell-green',
-      'y': 'wordle-cell-yellow',
-      '-': 'wordle-cell-gray',
-    }
-    const cellClass = cellClassByColor[P.color]
-    const letterClass = P.color ? 'wordle-letter-white' : 'wordle-letter-black'
+      null: P.letter ? "wordle-cell-with-letter" : "wordle-cell",
+      g: "wordle-cell-green",
+      y: "wordle-cell-yellow",
+      "-": "wordle-cell-gray",
+    };
+    const cellClass = cellClassByColor[P.color];
+    const letterClass = P.color ? "wordle-letter-white" : "wordle-letter-black";
     return (
-      <div
-        className={cellClass}
-        onClick={P.onClick}
-      >
+      <div className={cellClass} onClick={P.onClick}>
         <div className={letterClass} style={{ userSelect: "none" }}>
           {P.letter}
         </div>
       </div>
-    )
+    );
   }
 }
 
-
-export default WordleGrid
+export default WordleGrid;

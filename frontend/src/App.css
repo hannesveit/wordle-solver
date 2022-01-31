@@ -1,47 +1,47 @@
 .everything {
-   margin: 20px;
+  margin: 20px;
 }
 .almost-everything {
-   display: flex;
-   justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 .wordle-heading {
-   color: rgb(77, 79, 83);
-   font-family: 'Helvetica Neue', sans-serif;
-   font-size: 80px;
-   font-weight: bold;
-   letter-spacing: -1px;
-   line-height: 1;
-   text-align: center;
+  color: rgb(77, 79, 83);
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 80px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
 }
 .wordle-heading-mobile {
-   color: rgb(77, 79, 83);
-   font-family: 'Helvetica Neue', sans-serif;
-   font-size: 36px;
-   font-weight: bold;
-   letter-spacing: -1px;
-   line-height: 1;
-   text-align: center;
+  color: rgb(77, 79, 83);
+  font-family: "Helvetica Neue", sans-serif;
+  font-size: 36px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
 }
 .wordle-app {
-   margin-top: 50px;
-   height: 445px;
-   overflow: hidden;
-   background: rgb(234, 236, 240);
-   border-radius: 25px;
+  margin-top: 50px;
+  height: 445px;
+  overflow: hidden;
+  background: rgb(234, 236, 240);
+  border-radius: 25px;
 }
 .wordle-container {
-   margin: 25px;
-   float: left;
-   width: 300px;
-   height: 445px;
- }
+  margin: 25px;
+  float: left;
+  width: 300px;
+  height: 445px;
+}
 .wordle-input-form {
-   margin: 25px;
-   float: left;
-   width: 180px;
+  margin: 25px;
+  float: left;
+  width: 180px;
 }
 .confirm-button {
-   margin-top: 10px;
-   width: 100%;
+  margin-top: 10px;
+  width: 100%;
 }
