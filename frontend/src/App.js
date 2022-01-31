@@ -144,7 +144,11 @@ class App extends React.Component {
           />
         </div>
         <div>
-          <Button className="confirm-button" onClick={this.handleWordConfirmed}>
+          <Button
+            className="confirm-button"
+            disabled={this.state.fetchingSuggestions}
+            onClick={this.handleWordConfirmed}
+          >
             Confirm
           </Button>
         </div>
