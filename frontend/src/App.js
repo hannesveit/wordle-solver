@@ -52,7 +52,10 @@ class App extends React.Component {
             currentSuggestions: json.suggestions,
             currentWord: newCurrentWord,
             fetchingSuggestions: false,
-            gameOver: newCurrentWord ? false : true,
+            gameOver: (
+              newCurrentWord && this.state.game.length <= this.state.n
+              ? false : true
+            )
           })
         )})
         // TODO: error handling

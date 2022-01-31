@@ -22,7 +22,7 @@ class WordleGrid extends React.Component {
       }
     }
 
-    if (P.currentWord) {
+    if (P.currentWord && cells.length < totalNumCells) {
       for (let i = 0; i < P.n; i++) {
         cells.push(
           <GridCell
