@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import CreatableSelect from "react-select/creatable";
-import { isMobile } from "react-device-detect";
 
 import WordleGrid from "./WordleGrid";
 import "./App.css";
@@ -15,10 +14,10 @@ class App extends React.Component {
       maxGuesses: 6,
       game: [],
       currentWord: null,
-      pickingColors: false,
       currentColors: Array.from(Array(n)).map(() => null),
       currentSuggestions: [],
       fetchingSuggestions: false,
+      pickingColors: false,
       gameOver: false,
     };
   }
@@ -133,9 +132,8 @@ class App extends React.Component {
       ? makeOption(this.state.currentWord)
       : null;
 
-    return (
-      <div>
-        <div>
+    return <>
+        <div className="input-form-left">
           <CreatableSelect
             isClearable
             onChange={this.handleSelectChange}
@@ -143,35 +141,31 @@ class App extends React.Component {
             value={value}
           />
         </div>
-        <div>
-          <Button
-            className="confirm-button"
-            disabled={this.state.fetchingSuggestions}
-            onClick={this.handleWordConfirmed}
-          >
-            Confirm
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
-  renderColorSelect() {
-    return (
-      <div>
-        <p style={{ textAlign: "center" }}>
-          Enter colors for <b>"{this.state.currentWord}"</b> by clicking its
-          letters!
-        </p>
         <Button
-          className="confirm-button"
-          disabled={this.state.currentColors.includes(null)}
-          onClick={this.handleColorsConfirmed}
+          className="input-form-button"
+          disabled={this.state.fetchingSuggestions}
+          onClick={this.handleWordConfirmed}
         >
           Confirm
         </Button>
+      </>;
+  }
+
+  renderColorSelect() {
+    return <>
+      <div className="input-form-left">
+        <p className="color-select-text">
+          Click letters to choose colors!
+        </p>
       </div>
-    );
+      <Button
+        className="input-form-button"
+        disabled={this.state.currentColors.includes(null)}
+        onClick={this.handleColorsConfirmed}
+      >
+        Confirm
+      </Button>
+    </>;
   }
 
   renderGameOver() {
@@ -179,14 +173,14 @@ class App extends React.Component {
       this.state.game.slice(-1)[0].response === "g".repeat(this.state.n)
         ? "Sweet! You won!"
         : "No valid solutions left :(";
-    return (
-      <div>
-        <p style={{ textAlign: "center" }}>{msg}</p>
-        <Button className="confirm-button" onClick={this.handleReset}>
-          Start over
-        </Button>
+    return <>
+      <div className="input-form-left">
+        <p className="color-select-text">{msg}</p>
       </div>
-    );
+      <Button className="input-form-button" onClick={this.handleReset}>
+        Reset
+      </Button>
+    </>
   }
 
   render() {
@@ -211,11 +205,9 @@ class App extends React.Component {
             height={50}
           />
         </a>
-        <div className={isMobile ? "wordle-heading-mobile" : "wordle-heading"}>
-          wordle solver
-        </div>
         <div className="almost-everything">
           <div className="wordle-app">
+          <div className="wordle-input-form">{wordleInputForm}</div>
             <div className="wordle-container">
               <WordleGrid
                 n={this.state.n}
@@ -227,7 +219,6 @@ class App extends React.Component {
                 handleSwitchColor={this.handleSwitchColor}
               />
             </div>
-            <div className="wordle-input-form">{wordleInputForm}</div>
           </div>
         </div>
       </div>
