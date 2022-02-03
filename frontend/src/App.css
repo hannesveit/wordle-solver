@@ -21,8 +21,8 @@
   width: 289px;
 }
 .input-form-left {
-   height: 38px;
-   flex: 1;
+  height: 38px;
+  flex: 1;
 }
 .color-select-text {
   line-height: 38px;
@@ -30,7 +30,7 @@
   font-size: 10pt;
 }
 .input-form-button {
-   height: 38px;
-   margin-left: 10px;
-   flex: 0 0 80px;
- }
+  height: 38px;
+  margin-left: 10px;
+  flex: 0 0 80px;
+}

@@ -38,7 +38,7 @@ class App extends React.Component {
         fetch(
           "http://" +
             this.backendHost +
-            "/suggestions?n_suggestions=50&game=" +
+            "?n_suggestions=50&game=" +
             this.gameStr()
         )
           .then((resp) => resp.json())
@@ -132,7 +132,8 @@ class App extends React.Component {
       ? makeOption(this.state.currentWord)
       : null;
 
-    return <>
+    return (
+      <>
         <div className="input-form-left">
           <CreatableSelect
             isClearable
@@ -148,24 +149,25 @@ class App extends React.Component {
         >
           Confirm
         </Button>
-      </>;
+      </>
+    );
   }
 
   renderColorSelect() {
-    return <>
-      <div className="input-form-left">
-        <p className="color-select-text">
-          Click letters to choose colors!
-        </p>
-      </div>
-      <Button
-        className="input-form-button"
-        disabled={this.state.currentColors.includes(null)}
-        onClick={this.handleColorsConfirmed}
-      >
-        Confirm
-      </Button>
-    </>;
+    return (
+      <>
+        <div className="input-form-left">
+          <p className="color-select-text">Click letters to choose colors!</p>
+        </div>
+        <Button
+          className="input-form-button"
+          disabled={this.state.currentColors.includes(null)}
+          onClick={this.handleColorsConfirmed}
+        >
+          Confirm
+        </Button>
+      </>
+    );
   }
 
   renderGameOver() {
@@ -173,14 +175,16 @@ class App extends React.Component {
       this.state.game.slice(-1)[0].response === "g".repeat(this.state.n)
         ? "Sweet! You won!"
         : "No valid solutions left :(";
-    return <>
-      <div className="input-form-left">
-        <p className="color-select-text">{msg}</p>
-      </div>
-      <Button className="input-form-button" onClick={this.handleReset}>
-        Reset
-      </Button>
-    </>
+    return (
+      <>
+        <div className="input-form-left">
+          <p className="color-select-text">{msg}</p>
+        </div>
+        <Button className="input-form-button" onClick={this.handleReset}>
+          Reset
+        </Button>
+      </>
+    );
   }
 
   render() {
@@ -207,7 +211,7 @@ class App extends React.Component {
         </a>
         <div className="almost-everything">
           <div className="wordle-app">
-          <div className="wordle-input-form">{wordleInputForm}</div>
+            <div className="wordle-input-form">{wordleInputForm}</div>
             <div className="wordle-container">
               <WordleGrid
                 n={this.state.n}
