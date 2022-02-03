@@ -41,6 +41,7 @@ class App extends React.Component {
             "?n_suggestions=50&game=" +
             this.gameStr()
         )
+          .then(handleFetchErrors)
           .then((resp) => resp.json())
           .then((json) => {
             const newCurrentWord = json.suggestions.length
@@ -56,8 +57,10 @@ class App extends React.Component {
                   ? false
                   : true,
             }));
+          })
+          .catch((error) => {
+            alert("Error: " + error);
           });
-        // TODO: error handling
       }
     );
   }
@@ -228,6 +231,13 @@ class App extends React.Component {
       </div>
     );
   }
+}
+
+function handleFetchErrors(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
 }
 
 export default App;
