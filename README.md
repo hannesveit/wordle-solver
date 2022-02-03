@@ -1,6 +1,9 @@
 # wordle-solver
 
-A simple [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in python.
+A [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in Python and
+React, available [here](https://hannesveit.github.io/wordle-solver/).
+
+![image](https://user-images.githubusercontent.com/5813121/152310586-810803a3-8516-4429-914c-70e6c32673c9.png)
 
 The solver plays in hard mode (i.e., it always plays all green and yellow letters
 obtained from previous guesses) and finds the solution in 3.67 guesses on average.
@@ -11,8 +14,8 @@ played yet) have the highest frequency in the remaining solution pool. Ties are
 broken by taking positional letter frequency into account: it prefers words
 containing those letters at positions where they often occur.
 
-If you're looking for an optimal solution, this one is not for you. There are
-plenty of Wordle solvers here on github, some of which brute-force an optimal
+If you're looking for an optimal solution, there might be better options for you.
+Plenty of Wordle solvers exist here on github, some of which brute-force an optimal
 solution, and others which come closer to an optimal solution using more
 sophisticated greedy heuristics that narrow down the solution pool more
 efficiently. This one is fast, easy to use, and plays decently.
@@ -33,13 +36,29 @@ Colors based on Wordle docs:  -yg-y
 Actual Wordle colors:         -yg--
 ```
 
-## Usage
+## Development
 
-Python 3.8 or later is required. As an alternative, you can run the tool in
-docker (see [below](#using-docker)).
+To run the app locally, docker and docker-compose are required.
 
 ```
-$ python3 solver.py
+cd /path/to/wordle-solver
+docker-compose up -d
+```
+
+Now, the app will be available at `http://localhost:3000`, and the backend
+will be served at `http://localhost:8080`.
+
+## Using the command line version
+
+Python 3.8 or later is required. As an alternative, you can run the tool in
+docker (see [below](#cli-via-docker)).
+
+```
+cd /path/to/wordle-solver/backend
+python3 solver.py
+```
+
+```
 Example: secret = "PUFFY", guess = "FUNNY" --> enter colors "yg--g"
 
 2315 possible solutions left.
@@ -59,8 +78,6 @@ Enter colors for "ROBOT": ggggg
 
 Yay! ROBOT!
 ```
-![image](https://user-images.githubusercontent.com/5813121/150350490-0abb57c7-eec1-40e0-ac09-02c11661987f.png)
-
 
 In each round, you can accept the top suggestion by hitting enter, or enter your own
 guess instead if you don't like the top suggestion. Then enter the colors that Wordle
@@ -82,28 +99,25 @@ options:
   -s SUGG, --sugg SUGG  number of suggestions
 ```
 
-### Using docker
+### CLI via docker
 
-If your python version is too old but you have docker, you can build a
-docker image
+If your python version is too old but you have docker, you can run
+the command line version like this:
+
 ```
 cd /path/to/wordle-solver
-docker build -t wordle-solver .
+docker-compose build
+docker-compose run backend solver
 ```
 
-and run it like this:
+(Optional) command line args can be specified like this:
 ```
-docker run -it --rm wordle-solver
-```
-
-(Optional) command line options can be specified like this:
-```
-docker run -it --rm wordle-solver solver.py -n 8
+docker-compose run backend solver -n 8
 ```
 
 (Optional) performance evaluation script can be run like this:
 ```
-docker run -it --rm wordle-solver evaluation.py
+docker-compose run backend evaluation
 ```
 
 ## Performance
