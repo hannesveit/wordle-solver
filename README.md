@@ -42,6 +42,7 @@ To run the app locally, docker and docker-compose are required.
 
 ```
 cd /path/to/wordle-solver
+docker-compose build
 docker-compose up -d
 ```
 
