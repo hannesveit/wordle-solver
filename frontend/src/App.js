@@ -24,7 +24,7 @@ class App extends React.Component {
 
   backendHost =
     process.env.NODE_ENV === "production"
-      ? "https://ws-backend-swa2vbqxja-uc.a.run.app"
+      ? "ws-backend-swa2vbqxja-uc.a.run.app"
       : "localhost:8080";
 
   componentDidMount() {
