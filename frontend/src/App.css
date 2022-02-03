@@ -1,0 +1,36 @@
+.everything {
+  margin: 20px;
+}
+.almost-everything {
+  display: flex;
+  justify-content: center;
+}
+.wordle-app {
+  margin-top: 70px;
+  height: 460px;
+  overflow: hidden;
+  background: rgb(234, 236, 240);
+  border-radius: 25px;
+}
+.wordle-container {
+  margin: 25px;
+}
+.wordle-input-form {
+  display: flex;
+  margin: 25px;
+  width: 289px;
+}
+.input-form-left {
+  height: 38px;
+  flex: 1;
+}
+.color-select-text {
+  line-height: 38px;
+  text-align: center;
+  font-size: 10pt;
+}
+.input-form-button {
+  height: 38px;
+  margin-left: 10px;
+  flex: 0 0 80px;
+}
