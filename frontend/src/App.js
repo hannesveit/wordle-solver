@@ -25,7 +25,7 @@ class App extends React.Component {
   backendHost =
     process.env.NODE_ENV === "production"
       ? "https://ws-backend-swa2vbqxja-uc.a.run.app"
-      : "localhost:8080";
+      : "http://localhost:8080";
 
   componentDidMount() {
     this.fetchSuggestions();
@@ -36,7 +36,6 @@ class App extends React.Component {
       (s) => ({ ...s, fetchingSuggestions: true }),
       () => {
         fetch(
-          "http://" +
             this.backendHost +
             "?n_suggestions=50&game=" +
             this.gameStr()
