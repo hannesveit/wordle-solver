@@ -79,21 +79,14 @@ class App extends React.Component {
   }
 
   autoColors(newWord) {
+    // auto-color only green letters (yellow and gray can be complicated
+    // if there's multiple occurrences of the same letter, not worth it)
     const autoColors = [...this.state.initialColors];
-    let gray = new Set();
     for (const guess of this.state.game) {
       for (let i = 0; i < this.state.n; i++) {
-        if (guess.word[i] === newWord[i]) {
-          autoColors[i] = guess.response[i];
+        if (guess.response[i] === "g" && guess.word[i] === newWord[i]) {
+          autoColors[i] = "g";
         }
-        if (guess.response[i] === "-") {
-          gray.add(guess.word[i]);
-        }
-      }
-    }
-    for (let i = 0; i < newWord.length; i++) {
-      if (gray.has(newWord[i])) {
-        autoColors[i] = "-";
       }
     }
     return autoColors;
