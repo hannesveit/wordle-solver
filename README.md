@@ -3,7 +3,7 @@
 A [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in Python and
 React, available [here](https://hannesveit.github.io/wordle-solver/).
 
-![image](https://user-images.githubusercontent.com/5813121/152310586-810803a3-8516-4429-914c-70e6c32673c9.png)
+![image](https://user-images.githubusercontent.com/5813121/152683792-ef682b3e-8725-4ea2-850b-d329849c6b0c.png)
 
 The solver plays in hard mode (i.e., it always plays all green and yellow letters
 obtained from previous guesses) and finds the solution in 3.67 guesses on average.
