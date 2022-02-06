@@ -109,7 +109,7 @@ class App extends React.Component {
     if (!option || !option.value) {
       return;
     }
-    const newWord = option.value.toUpperCase();
+    const newWord = option.value.trim().toUpperCase();
     if (newWord.length === this.state.n && /^[A-Z]+$/.test(newWord)) {
       this.setState((s) => ({
         ...s,
