@@ -9,16 +9,17 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     const n = 5;
+    const initialColors = Array.from(Array(n)).map(() => null);
     this.state = {
       n: n,
       maxGuesses: 6,
       game: [],
+      initialColors: initialColors,
+      currentColors: [...initialColors],
       currentWord: null,
-      currentColors: Array.from(Array(n)).map(() => null),
       currentSuggestions: [],
       fetchingSuggestions: false,
-      pickingColors: false,
-      gameOver: false,
+      gameStatus: "playing",
     };
   }
 
@@ -26,6 +27,13 @@ class App extends React.Component {
     process.env.NODE_ENV === "production"
       ? "https://ws-backend-swa2vbqxja-uc.a.run.app"
       : "http://localhost:8080";
+
+  statusText = {
+    playing: "Click letters to enter colors!",
+    won: "Sweet! Solved!",
+    outOfGuesses: "We're out of guesses :(",
+    noSolutionsLeft: "No valid solutions left :(",
+  };
 
   componentDidMount() {
     this.fetchSuggestions();
@@ -35,26 +43,30 @@ class App extends React.Component {
     this.setState(
       (s) => ({ ...s, fetchingSuggestions: true }),
       () => {
-        fetch(
-            this.backendHost +
-            "?n_suggestions=50&game=" +
-            this.gameStr()
-        )
+        fetch(this.backendHost + "?n_suggestions=50&game=" + this.gameStr())
           .then(handleFetchErrors)
           .then((resp) => resp.json())
           .then((json) => {
             const newCurrentWord = json.suggestions.length
               ? json.suggestions[0]
               : null;
+            let gameStatus = this.state.gameStatus;
+            let currentColors = this.state.currentColors;
+            if (this.state.game.length > this.state.n) {
+              gameStatus = "outOfGuesses";
+            } else if (json.suggestions.length == 1) {
+              gameStatus = "won";
+              currentColors = Array.from(Array(this.state.n)).map(() => "g");
+            } else if (!newCurrentWord) {
+              gameStatus = "noSolutionsLeft";
+            }
             this.setState((s) => ({
               ...s,
               currentSuggestions: json.suggestions,
               currentWord: newCurrentWord,
               fetchingSuggestions: false,
-              gameOver:
-                newCurrentWord && this.state.game.length <= this.state.n
-                  ? false
-                  : true,
+              gameStatus: gameStatus,
+              currentColors: currentColors,
             }));
           })
           .catch((error) => {
@@ -76,7 +88,11 @@ class App extends React.Component {
     }
     const newWord = option.value.toUpperCase();
     if (newWord.length === this.state.n && /^[A-Z]+$/.test(newWord)) {
-      this.setState((s) => ({ ...s, currentWord: newWord }));
+      this.setState((s) => ({
+        ...s,
+        currentWord: newWord,
+        currentColors: [...this.state.initialColors],
+      }));
     } else {
       alert(
         `"${newWord}" is invalid. Choose a word of length ${this.state.n} ` +
@@ -85,16 +101,15 @@ class App extends React.Component {
     }
   };
 
-  handleWordConfirmed = () => {
-    this.setState((s) => ({ ...s, pickingColors: true }));
-  };
-
   handleColorsConfirmed = () => {
     const confirmedColors = this.state.currentColors.join("");
+    let gameStatus = this.state.gameStatus;
+    if (confirmedColors === "g".repeat(this.state.n)) {
+      gameStatus = "won";
+    }
     this.setState(
       (s) => ({
         ...s,
-        pickingColors: false,
         game: [
           ...this.state.game,
           {
@@ -103,15 +118,21 @@ class App extends React.Component {
           },
         ],
         currentWord: null,
-        currentColors: Array.from(Array(this.state.n)).map(() => null),
+        currentColors: [...this.state.initialColors],
+        gameStatus: gameStatus,
       }),
       () => {
-        this.fetchSuggestions();
+        if (gameStatus !== "won") {
+          this.fetchSuggestions();
+        }
       }
     );
   };
 
   handleSwitchColor = (i) => {
+    if (this.state.gameStatus !== "playing") {
+      return;
+    }
     const nextColor = { null: "-", "-": "y", y: "g", g: "-" };
     const updatedColors = this.state.currentColors;
     updatedColors[i] = nextColor[updatedColors[i]];
@@ -146,23 +167,6 @@ class App extends React.Component {
         </div>
         <Button
           className="input-form-button"
-          disabled={this.state.fetchingSuggestions}
-          onClick={this.handleWordConfirmed}
-        >
-          Confirm
-        </Button>
-      </>
-    );
-  }
-
-  renderColorSelect() {
-    return (
-      <>
-        <div className="input-form-left">
-          <p className="color-select-text">Click letters to choose colors!</p>
-        </div>
-        <Button
-          className="input-form-button"
           disabled={this.state.currentColors.includes(null)}
           onClick={this.handleColorsConfirmed}
         >
@@ -172,29 +176,14 @@ class App extends React.Component {
     );
   }
 
-  renderGameOver() {
-    const msg =
-      this.state.game.slice(-1)[0].response === "g".repeat(this.state.n)
-        ? "Sweet! You won!"
-        : "No valid solutions left :(";
-    return (
-      <>
-        <div className="input-form-left">
-          <p className="color-select-text">{msg}</p>
-        </div>
-        <Button className="input-form-button" onClick={this.handleReset}>
-          Reset
-        </Button>
-      </>
-    );
-  }
-
   render() {
     let wordleInputForm = this.renderWordSelect();
-    if (this.state.pickingColors) {
-      wordleInputForm = this.renderColorSelect();
-    } else if (this.state.gameOver) {
-      wordleInputForm = this.renderGameOver();
+    if (this.state.gameStatus !== "playing") {
+      wordleInputForm = (
+        <div className="reset-button">
+          <Button onClick={this.handleReset}>Start over</Button>
+        </div>
+      );
     }
 
     return (
@@ -213,6 +202,9 @@ class App extends React.Component {
         </a>
         <div className="almost-everything">
           <div className="wordle-app">
+            <p className="status-text">
+              {this.statusText[this.state.gameStatus]}
+            </p>
             <div className="wordle-input-form">{wordleInputForm}</div>
             <div className="wordle-container">
               <WordleGrid
@@ -221,7 +213,6 @@ class App extends React.Component {
                 game={this.state.game}
                 currentWord={this.state.currentWord}
                 currentColors={this.state.currentColors}
-                pickingColors={this.state.pickingColors}
                 handleSwitchColor={this.handleSwitchColor}
               />
             </div>

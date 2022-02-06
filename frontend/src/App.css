@@ -6,8 +6,8 @@
   justify-content: center;
 }
 .wordle-app {
-  margin-top: 70px;
-  height: 460px;
+  margin-top: 50px;
+  height: 500px;
   overflow: hidden;
   background: rgb(234, 236, 240);
   border-radius: 25px;
@@ -24,8 +24,8 @@
   height: 38px;
   flex: 1;
 }
-.color-select-text {
-  line-height: 38px;
+.status-text {
+  margin-top: 20px;
   text-align: center;
   font-size: 10pt;
 }
@@ -33,4 +33,9 @@
   height: 38px;
   margin-left: 10px;
   flex: 0 0 80px;
+}
+.reset-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

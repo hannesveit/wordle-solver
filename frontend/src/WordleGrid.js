@@ -29,7 +29,7 @@ class WordleGrid extends React.Component {
             letter={P.currentWord[i]}
             color={P.currentColors[i]}
             onClick={() => {
-              if (P.pickingColors) P.handleSwitchColor(i);
+              P.handleSwitchColor(i);
             }}
           />
         );
