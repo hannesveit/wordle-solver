@@ -59,6 +59,8 @@ class App extends React.Component {
               currentColors = Array.from(Array(this.state.n)).map(() => "g");
             } else if (!newCurrentWord) {
               gameStatus = "noSolutionsLeft";
+            } else {
+              currentColors = this.autoColors(newCurrentWord);
             }
             this.setState((s) => ({
               ...s,
@@ -76,6 +78,27 @@ class App extends React.Component {
     );
   }
 
+  autoColors(newWord) {
+    const autoColors = [...this.state.initialColors];
+    let gray = new Set();
+    for (const guess of this.state.game) {
+      for (let i = 0; i < this.state.n; i++) {
+        if (guess.word[i] === newWord[i]) {
+          autoColors[i] = guess.response[i];
+        }
+        if (guess.response[i] === "-") {
+          gray.add(guess.word[i]);
+        }
+      }
+    }
+    for (let i = 0; i < newWord.length; i++) {
+      if (gray.has(newWord[i])) {
+        autoColors[i] = "-";
+      }
+    }
+    return autoColors;
+  }
+
   gameStr() {
     return this.state.game
       .map((guess) => guess.word + ":" + guess.response)
@@ -91,7 +114,7 @@ class App extends React.Component {
       this.setState((s) => ({
         ...s,
         currentWord: newWord,
-        currentColors: [...this.state.initialColors],
+        currentColors: [...this.autoColors(newWord)],
       }));
     } else {
       alert(
