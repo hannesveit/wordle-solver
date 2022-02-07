@@ -54,7 +54,7 @@ class App extends React.Component {
             let currentColors = this.state.currentColors;
             if (this.state.game.length > this.state.n) {
               gameStatus = "outOfGuesses";
-            } else if (json.suggestions.length == 1) {
+            } else if (json.suggestions.length === 1) {
               gameStatus = "won";
               currentColors = Array.from(Array(this.state.n)).map(() => "g");
             } else if (!newCurrentWord) {
