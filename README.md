@@ -1,7 +1,7 @@
 # wordle-solver
 
-A [Wordle](https://www.powerlanguage.co.uk/wordle/) solver written in Python and
-React, available [here](https://hannesveit.github.io/wordle-solver/).
+A [Wordle](https://www.nytimes.com/games/wordle/index.html) solver written in
+Python and React, available [here](https://hannesveit.github.io/wordle-solver/).
 
 ![image](https://user-images.githubusercontent.com/5813121/152683792-ef682b3e-8725-4ea2-850b-d329849c6b0c.png)
 
