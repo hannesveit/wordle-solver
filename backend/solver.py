@@ -67,7 +67,7 @@ class WordleSolver:
         pos_letter_count = {
             i: Counter(w[i] for w in self.remaining_words) for i in range(self.n)
         }
-        known_letters = set(self.min_occurrences.values())
+        known_letters = set(self.min_occurrences.keys())
 
         def key(word):
             new_letters = set(word) - known_letters
